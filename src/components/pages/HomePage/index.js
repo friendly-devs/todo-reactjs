@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import CreatTodo from './FormTodo'
+import CreatTodo from './CreateTodo'
 import TodoListStorage from '../../../context/TodoListStorage'
 import TodoList from './TodoList'
 import Button from '../../common/Button'
@@ -10,6 +10,14 @@ export const TodoContext = React.createContext()
 
 export default function HomePage() {
   const [enable, setEnable] = useState(true)
+
+  const onCancel = () => {
+    setEnable(false)
+  }
+
+  const showForm = () => {
+    setEnable(true)
+  }
 
   return (
     <TodoContext.Provider value={TodoListStorage()}>
@@ -22,13 +30,13 @@ export default function HomePage() {
         {
           enable && (
             <div className='todo-form'>
-              <CreatTodo />
+              <CreatTodo onCancel={onCancel} />
             </div>
           )
         }
 
         <div className='todo-content'>
-          <Button>Thêm công việc</Button>
+          <Button onClick={showForm}>Thêm công việc</Button>
           <TodoList />
         </div>
       </div>

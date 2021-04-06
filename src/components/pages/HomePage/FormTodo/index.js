@@ -1,36 +1,24 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import Button from '../../../common/Button'
 import TextInput from '../../../common/TextInput'
 import SelectionLabel from '../../../common/SelectionLabel'
 import todoStatus from '../../../../constants/todoStatus'
-import { TodoContext } from '..'
 
 import './index.css'
 
 const initialName = ''
 const initialStatus = todoStatus.ACTIVE
 
-export default function CreateTodo() {
-  const { saveTodo } = useContext(TodoContext)
-  const [name, setName] = useState(initialName)
-  const [status, setStatus] = useState(initialStatus)
+export default function CreateTodo(props) {
+  const {
+    defaultName = initialName,
+    defaultStatus = initialStatus,
+    onSubmit,
+    onCancel
+  } = props
 
-  const addTodo = () => {
-
-    if (name === '') {
-      alert('Không được để trống dữ liệu')
-      return
-    }
-
-    saveTodo(name, status)
-
-    setName(initialName)
-    setStatus(initialStatus)
-  }
-
-  const cancel = () => {
-
-  }
+  const [name, setName] = useState(defaultName)
+  const [status, setStatus] = useState(defaultStatus)
 
   const handleChangeName = (event) => {
     setName(event.target.value)
@@ -38,6 +26,17 @@ export default function CreateTodo() {
 
   const handleChangeStatus = (event) => {
     setStatus(event.target.value)
+  }
+
+  const onClick = () => {
+    if(name !== '') {
+      onSubmit(name, status)
+      // clear data
+      setName(initialName)
+      setStatus(initialStatus)
+    } else {
+      alert('Nhập đầy đủ dữ liệu!')
+    }
   }
 
   return (
@@ -60,8 +59,8 @@ export default function CreateTodo() {
           onChange={handleChangeStatus} />
 
         <div>
-          <Button onClick={addTodo}>Lưu lại</Button>
-          <Button variant='error' onClick={cancel}>Hủy bỏ</Button>
+          <Button onClick={onClick}>Lưu lại</Button>
+          <Button variant='error' onClick={onCancel}>Hủy bỏ</Button>
         </div>
       </div>
     </div>
