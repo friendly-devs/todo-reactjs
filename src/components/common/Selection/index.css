@@ -1,0 +1,9 @@
+.select-component {
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  border-radius: .25rem;
+  border: 1px solid #ced4da;
+  outline: none;
+  background-color: white;
+  min-width: 230px;
+}

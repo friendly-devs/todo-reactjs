@@ -1,0 +1,18 @@
+h1 {
+  text-align: center;
+}
+
+.root-container {
+  display: flex;
+  flex-direction: row;
+  padding: 0px 50px;
+}
+
+.todo-form {
+  display: block;
+}
+
+.todo-content {
+  display: block;
+  width: 100%;
+}

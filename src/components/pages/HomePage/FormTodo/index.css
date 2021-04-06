@@ -1,0 +1,28 @@
+.wrapper {
+  border: #faebcc 1px solid;
+  
+  border-radius: 0.25em;
+  display: block;
+  width: min-content;
+}
+
+.header {
+  background-color: #fcf8e3;
+  display: flex;
+  color: #8a6d3b;
+  justify-content: center;
+}
+
+.container {
+  padding: 20px;
+  display: block;
+}
+
+.margin-top-right {
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
+input {
+  margin-bottom: 10px;
+}
