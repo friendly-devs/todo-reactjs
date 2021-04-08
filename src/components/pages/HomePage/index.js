@@ -31,8 +31,7 @@ export default function HomePage() {
     const currentTodo = findById(id)
     setTodo(() => currentTodo)
     setUpdate(true)
-
-    console.log('HomePage call update todo')
+    setEnable(true)
   }
 
   const element = isUpdate ?
