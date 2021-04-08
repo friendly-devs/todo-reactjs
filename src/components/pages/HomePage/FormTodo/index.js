@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '../../../common/Button'
 import TextInput from '../../../common/TextInput'
 import SelectionLabel from '../../../common/SelectionLabel'
@@ -8,17 +8,27 @@ import './index.css'
 
 const initialName = ''
 const initialStatus = todoStatus.ACTIVE
+const initialTitle = 'Thêm công việc'
 
 export default function CreateTodo(props) {
   const {
     defaultName = initialName,
     defaultStatus = initialStatus,
+    defaultTitle = initialTitle,
     onSubmit,
     onCancel
   } = props
 
   const [name, setName] = useState(defaultName)
   const [status, setStatus] = useState(defaultStatus)
+
+  useEffect(() => {
+    setName(defaultName)
+  }, [defaultName])
+
+  useEffect(() => {
+    setStatus(defaultStatus)
+  }, [defaultStatus])
 
   const handleChangeName = (event) => {
     setName(event.target.value)
@@ -29,11 +39,13 @@ export default function CreateTodo(props) {
   }
 
   const onClick = () => {
-    if(name !== '') {
+    if (name !== '') {
       onSubmit(name, status)
-      // clear data
-      setName(initialName)
-      setStatus(initialStatus)
+
+      if (defaultTitle === initialTitle) {
+        setName(initialName)
+        setStatus(initialStatus)
+      }
     } else {
       alert('Nhập đầy đủ dữ liệu!')
     }
@@ -42,7 +54,7 @@ export default function CreateTodo(props) {
   return (
     <div className='wrapper'>
       <div className='header'>
-        <p>Thêm công việc</p>
+        <p>{defaultTitle}</p>
       </div>
 
       <div className='container'>

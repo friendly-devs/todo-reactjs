@@ -1,26 +1,52 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import CreatTodo from './CreateTodo'
-import TodoListStorage from '../../../context/TodoListStorage'
 import TodoList from './TodoList'
 import Button from '../../common/Button'
 
 import './index.css'
-
-export const TodoContext = React.createContext()
+import UpdateTodo from './UpdateTodo'
+import { TodoContext } from '../../../App'
 
 export default function HomePage() {
   const [enable, setEnable] = useState(true)
+  const [isUpdate, setUpdate] = useState(false)
+  const [todo, setTodo] = useState({})
+
+  useEffect(() => {
+    console.log(todo)
+  }, [todo])
+
+  const { findById } = useContext(TodoContext)
 
   const onCancel = () => {
     setEnable(false)
   }
 
   const showForm = () => {
+    setUpdate(false)
     setEnable(true)
   }
 
+  const onUpdateTodo = (id) => {
+    const currentTodo = findById(id)
+    setTodo(() => currentTodo)
+    setUpdate(true)
+
+    console.log('HomePage call update todo')
+  }
+
+  const element = isUpdate ?
+    <UpdateTodo onCancel={onCancel} todo={todo} /> :
+    <CreatTodo onCancel={onCancel} />
+
+  const elementWrapper = (
+    <div className='todo-form'>
+      {element}
+    </div>
+  )
+
   return (
-    <TodoContext.Provider value={TodoListStorage()}>
+    <>
       <div>
         <h1>Quản lý công việc</h1>
         <hr />
@@ -28,18 +54,14 @@ export default function HomePage() {
 
       <div className='root-container'>
         {
-          enable && (
-            <div className='todo-form'>
-              <CreatTodo onCancel={onCancel} />
-            </div>
-          )
+          enable && elementWrapper
         }
 
         <div className='todo-content'>
           <Button onClick={showForm}>Thêm công việc</Button>
-          <TodoList />
+          <TodoList onUpdateTodo={onUpdateTodo} />
         </div>
       </div>
-    </TodoContext.Provider>
+    </>
   )
 }

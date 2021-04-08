@@ -82,10 +82,19 @@ export default function TodoListStorage() {
     }
   }
 
+  const findById = (id) => {
+    const value = todoMap.get(id)
+    return {
+      ...value,
+      id,
+    }
+  }
+
   return {
     saveTodo,
     deleteTodo,
     updateTodo,
+    findById,
     todoList
   }
 }
