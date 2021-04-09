@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import CreatTodo from './CreateTodo'
 import TodoList from './TodoList'
 import Button from '../../common/Button'
@@ -6,17 +6,14 @@ import Button from '../../common/Button'
 import './index.css'
 import UpdateTodo from './UpdateTodo'
 import { TodoContext } from '../../../App'
+import Search from '../../common/Search'
 
 export default function HomePage() {
   const [enable, setEnable] = useState(true)
   const [isUpdate, setUpdate] = useState(false)
   const [todo, setTodo] = useState({})
 
-  useEffect(() => {
-    console.log(todo)
-  }, [todo])
-
-  const { findById } = useContext(TodoContext)
+  const { findById, findAllTodoByName } = useContext(TodoContext)
 
   const onCancel = () => {
     setEnable(false)
@@ -58,7 +55,10 @@ export default function HomePage() {
 
         <div className='todo-content'>
           <Button onClick={showForm}>Thêm công việc</Button>
-          <TodoList onUpdateTodo={onUpdateTodo} />
+          <div>
+            <Search onChange={(e) => { findAllTodoByName(e.target.value) }} />
+          </div>
+          <TodoList onUpdateTodo={onUpdateTodo} onCancel={onCancel} />
         </div>
       </div>
     </>

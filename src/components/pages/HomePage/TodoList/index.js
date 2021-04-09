@@ -5,11 +5,17 @@ import './index.css'
 import { TodoContext } from '../../../../App'
 
 export default function TodoList(props) {
-  const {onUpdateTodo} = props
+  const { onUpdateTodo, onCancel } = props
 
   const { todoList } = useContext(TodoContext)
 
-  const elements = todoList.map(todo => <Todo key={todo.id} todo={todo} onUpdateTodo={onUpdateTodo} />)
+  const elements = todoList.map(todo => (
+    <Todo
+      key={todo.id}
+      todo={todo}
+      onCancel={onCancel}
+      onUpdateTodo={onUpdateTodo} />
+  ))
 
   return (
     <table>

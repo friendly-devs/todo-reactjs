@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import Utils from '../utils/StringUtils'
 
 const keyMap = 'todo.map'
 const keyId = 'todo.id'
@@ -56,7 +57,7 @@ export default function TodoListStorage() {
       })
     })
 
-    setTodoList(list)
+    return list
   }
 
   const saveToLocalStorage = (id, map) => {
@@ -71,7 +72,9 @@ export default function TodoListStorage() {
   }
 
   useEffect(() => {
-    updateTodoList(todoMap)
+    const newTodoList = updateTodoList(todoMap)
+    setTodoList(newTodoList)
+
     saveToLocalStorage(id, todoMap)
   }, [id, todoMap])
 
@@ -124,11 +127,23 @@ export default function TodoListStorage() {
     }
   }
 
+  const findAllTodoByName = (text) => {
+    const list = updateTodoList(todoMap);
+
+    if (text.trim() === '') {
+      setTodoList(list);
+    } else {
+      const newTodoList = list.filter(({ name }) => Utils.includesIgnoreCase(name, text));
+      setTodoList(newTodoList)
+    }
+  }
+
   return {
     saveTodo,
     deleteTodo,
     updateTodo,
     findById,
+    findAllTodoByName,
     todoList
   }
 }

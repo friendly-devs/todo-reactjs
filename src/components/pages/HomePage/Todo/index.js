@@ -2,12 +2,16 @@ import { useContext } from "react"
 import { TodoContext } from "../../../../App"
 import Button from "../../../common/Button"
 
-
 export default function Todo(props) {
-  const { todo, onUpdateTodo } = props
+  const { todo, onUpdateTodo, onCancel } = props
   const { id, name, status } = todo
 
   const { deleteTodo } = useContext(TodoContext)
+
+  const deleteTodoHandle = () => {
+    deleteTodo(id)
+    onCancel()
+  }
 
   return (
     <tr>
@@ -16,7 +20,7 @@ export default function Todo(props) {
       <td>{status}</td>
       <td>
         <Button variant='warning' onClick={() => onUpdateTodo(id)}>Sửa</Button>
-        <Button variant='error' onClick={() => deleteTodo(id)}>Xóa</Button>
+        <Button variant='error' onClick={deleteTodoHandle}>Xóa</Button>
       </td>
     </tr>
   )

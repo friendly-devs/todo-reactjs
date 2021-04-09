@@ -12,7 +12,6 @@ export default function UpdateTodo(props) {
 
   const onSubmit = (name, status) => {
     updateTodo(id, name, status)
-    console.log('success')
   }
 
   return <FormTodo
