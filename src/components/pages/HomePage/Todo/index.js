@@ -3,7 +3,7 @@ import { TodoContext } from "../../../../App"
 import Button from "../../../common/Button"
 
 export default function Todo(props) {
-  const { todo, onUpdateTodo, onCancel } = props
+  const { index, todo, onUpdateTodo, onCancel } = props
   const { id, name, status } = todo
 
   const { deleteTodo } = useContext(TodoContext)
@@ -15,7 +15,7 @@ export default function Todo(props) {
 
   return (
     <tr>
-      <td>{id}</td>
+      <td>{index + 1}</td>
       <td>{name}</td>
       <td>{status}</td>
       <td>

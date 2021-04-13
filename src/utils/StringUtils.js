@@ -3,7 +3,7 @@ const Utils = {
     const lowCaseTarget = target.toLocaleLowerCase();
     const lowCaseValue = value.toLocaleLowerCase();
     return lowCaseTarget.includes(lowCaseValue);
-  }
-}
+  },
+};
 
-export default Utils
+export default Utils;

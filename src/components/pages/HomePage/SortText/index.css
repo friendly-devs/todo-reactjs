@@ -1,0 +1,19 @@
+.sort-head-component {
+  position: relative;
+  z-index: 10;
+  background-color: white;
+  margin: 2px 0 0;
+  padding: 5px 0;
+  max-width: 200px;
+  border-radius: 0.5em;
+  border: 1px solid rgba(0,0,0,.15);
+}
+
+.sort-head-component li {
+  list-style: none;
+}
+
+.sort-container {
+  display: inline-block;
+  position: absolute;
+}

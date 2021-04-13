@@ -1,39 +1,56 @@
-import { useEffect, useState } from 'react'
-import Utils from '../utils/StringUtils'
+import { useEffect, useState } from "react";
+import Utils from "../utils/StringUtils";
+import SortType from "../constants/SortType";
 
-const keyMap = 'todo.map'
-const keyId = 'todo.id'
+const keyMap = "todo.map";
+const keyId = "todo.id";
 
 function readMapFromLocalStorage() {
-  const map = new Map()
-  const data = localStorage.getItem(keyMap)
+  const map = new Map();
+  const data = localStorage.getItem(keyMap);
 
   if (data != null) {
-    const obj = JSON.parse(data)
+    const obj = JSON.parse(data);
 
     for (const key in obj) {
-      map.set(key, obj[key])
+      map.set(key, obj[key]);
     }
   }
 
-  return map
+  return map;
 }
 
 function readIdFromLocalStorage() {
-  const data = localStorage.getItem(keyId)
+  const data = localStorage.getItem(keyId);
   if (data != null) {
-    return parseInt(data)
+    return parseInt(data);
   }
 
-  return 1
+  return 1;
 }
 
-const initialTodoMap = readMapFromLocalStorage()
-const initialId = readIdFromLocalStorage()
-const initialTodoList = []
+const initialTodoMap = readMapFromLocalStorage();
+const initialId = readIdFromLocalStorage();
+const initialTodoList = [];
+
+const getSortFunction = (sortType) => {
+  switch (sortType) {
+    case SortType.DECREASE:
+      return (i1, i2) => i2.name.localeCompare(i1.name);
+
+    case SortType.STATUS_ACTIVE:
+      return (i1, i2) => i2.status.localeCompare(i1.status);
+
+    case SortType.STATUS_INACTIVE:
+      return (i1, i2) => i1.status.localeCompare(i2.status);  
+
+    default:
+      return (i1, i2) => i1.name.localeCompare(i2.name);
+  }
+};
 
 /**
- * 
+ *
  * @returns {
  * saveTodo,
  * deleteTodo,
@@ -42,101 +59,109 @@ const initialTodoList = []
  * }
  */
 export default function TodoListStorage() {
-  const [id, setId] = useState(initialId)
-  const [todoMap, setTodoMap] = useState(initialTodoMap)
-  const [todoList, setTodoList] = useState(initialTodoList)
+  const [sort, setSort] = useState(SortType.NONE);
+  const [id, setId] = useState(initialId);
+  const [todoMap, setTodoMap] = useState(initialTodoMap);
+  const [todoList, setTodoList] = useState(initialTodoList);
 
-  const updateTodoList = (map) => {
-    const list = []
+  const convertToList = (map) => {
+    const list = [];
 
     map.forEach((value, key) => {
       list.push({
         id: key,
         name: value.name,
-        status: value.status
-      })
-    })
+        status: value.status,
+      });
+    });
 
-    return list
-  }
+    return list;
+  };
 
   const saveToLocalStorage = (id, map) => {
-    const json = {}
+    const json = {};
 
     map.forEach((value, key) => {
-      json[key] = value
-    })
+      json[key] = value;
+    });
 
-    localStorage.setItem(keyId, JSON.stringify(id))
-    localStorage.setItem(keyMap, JSON.stringify(json))
-  }
+    localStorage.setItem(keyId, JSON.stringify(id));
+    localStorage.setItem(keyMap, JSON.stringify(json));
+  };
 
   useEffect(() => {
-    const newTodoList = updateTodoList(todoMap)
-    setTodoList(newTodoList)
+    const list = convertToList(todoMap);
 
-    saveToLocalStorage(id, todoMap)
-  }, [id, todoMap])
+    if (sort === SortType.NONE) {
+      setTodoList(list);
+    } else {
+      const compare = getSortFunction(sort);
+      setTodoList(list.sort(compare));
+    }
 
+    saveToLocalStorage(id, todoMap);
+  }, [id, todoMap, sort]);
 
   const saveTodo = (name, status) => {
     const newTodo = {
       name,
-      status
-    }
+      status,
+    };
 
-    const newMap = new Map(todoMap)
-    newMap.set(id, newTodo)
+    const newMap = new Map(todoMap);
+    newMap.set(id, newTodo);
 
-    setTodoMap(newMap)
-    setId((currentId) => currentId + 1)
-  }
+    setTodoMap(newMap);
+    setId((currentId) => currentId + 1);
+  };
 
   const deleteTodo = (id) => {
     if (todoMap.has(id)) {
-      const newMap = new Map(todoMap)
-      newMap.delete(id)
+      const newMap = new Map(todoMap);
+      newMap.delete(id);
 
-      setTodoMap(newMap)
+      setTodoMap(newMap);
     } else {
-      throw new Error(`Can't delete key ${id}`)
+      throw new Error(`Can't delete key ${id}`);
     }
-  }
+  };
 
   const updateTodo = (id, name, status) => {
     if (todoMap.has(id)) {
       const todo = {
         name,
-        status
-      }
+        status,
+      };
 
-      const newMap = new Map(todoMap)
-      newMap.set(id, todo)
+      const newMap = new Map(todoMap);
+      newMap.set(id, todo);
 
-      setTodoMap(newMap)
+      setTodoMap(newMap);
     } else {
-      throw Error(`Cannot update todo ${id}`)
+      throw Error(`Cannot update todo ${id}`);
     }
-  }
+  };
 
   const findById = (id) => {
-    const value = todoMap.get(id)
+    const value = todoMap.get(id);
     return {
       ...value,
       id,
-    }
-  }
+    };
+  };
 
   const findAllTodoByName = (text) => {
-    const list = updateTodoList(todoMap);
+    const list = convertToList(todoMap);
 
-    if (text.trim() === '') {
+    if (text.trim() === "") {
       setTodoList(list);
     } else {
-      const newTodoList = list.filter(({ name }) => Utils.includesIgnoreCase(name, text));
-      setTodoList(newTodoList)
+      const newTodoList = list.filter(({ name }) =>
+        Utils.includesIgnoreCase(name, text)
+      );
+      setTodoList(newTodoList);
     }
-  }
+  };
 
   return {
     saveTodo,
@@ -144,6 +169,7 @@ export default function TodoListStorage() {
     updateTodo,
     findById,
     findAllTodoByName,
-    todoList
-  }
+    setSort,
+    todoList,
+  };
 }

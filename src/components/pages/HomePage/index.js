@@ -3,10 +3,11 @@ import CreatTodo from './CreateTodo'
 import TodoList from './TodoList'
 import Button from '../../common/Button'
 
-import './index.css'
-import UpdateTodo from './UpdateTodo'
-import { TodoContext } from '../../../App'
-import Search from '../../common/Search'
+import './index.css';
+import UpdateTodo from './UpdateTodo';
+import { TodoContext } from '../../../App';
+import Search from '../../common/Search';
+import SortText from './SortText';
 
 export default function HomePage() {
   const [enable, setEnable] = useState(true)
@@ -57,6 +58,7 @@ export default function HomePage() {
           <Button onClick={showForm}>Thêm công việc</Button>
           <div>
             <Search onChange={(e) => { findAllTodoByName(e.target.value) }} />
+            <SortText />
           </div>
           <TodoList onUpdateTodo={onUpdateTodo} onCancel={onCancel} />
         </div>

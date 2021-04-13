@@ -1,21 +1,22 @@
-import Todo from '../Todo/'
-import './index.css'
-import { useContext } from 'react'
-import './index.css'
-import { TodoContext } from '../../../../App'
+import React, { useContext } from "react";
+import Todo from "../Todo/";
+import { TodoContext } from "../../../../App";
+import "./index.css";
 
 export default function TodoList(props) {
-  const { onUpdateTodo, onCancel } = props
+  const { onUpdateTodo, onCancel } = props;
 
-  const { todoList } = useContext(TodoContext)
+  const { todoList } = useContext(TodoContext);
 
-  const elements = todoList.map(todo => (
+  const elements = todoList.map((todo, index) => (
     <Todo
       key={todo.id}
       todo={todo}
+      index={index}
       onCancel={onCancel}
-      onUpdateTodo={onUpdateTodo} />
-  ))
+      onUpdateTodo={onUpdateTodo}
+    />
+  ));
 
   return (
     <table>
@@ -27,9 +28,7 @@ export default function TodoList(props) {
           <td>Hành động</td>
         </tr>
       </thead>
-      <tbody>
-        {elements}
-      </tbody>
+      <tbody>{elements}</tbody>
     </table>
-  )
+  );
 }
