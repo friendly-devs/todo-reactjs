@@ -3,7 +3,6 @@ import Utils from "../utils/StringUtils";
 import SortType from "../constants/SortType";
 
 const keyMap = "todo.map";
-const keyId = "todo.id";
 
 function readMapFromLocalStorage() {
   const map = new Map();
@@ -20,17 +19,7 @@ function readMapFromLocalStorage() {
   return map;
 }
 
-function readIdFromLocalStorage() {
-  const data = localStorage.getItem(keyId);
-  if (data != null) {
-    return parseInt(data);
-  }
-
-  return 1;
-}
-
 const initialTodoMap = readMapFromLocalStorage();
-const initialId = readIdFromLocalStorage();
 const initialTodoList = [];
 
 const getSortFunction = (sortType) => {
@@ -42,7 +31,7 @@ const getSortFunction = (sortType) => {
       return (i1, i2) => i2.status.localeCompare(i1.status);
 
     case SortType.STATUS_INACTIVE:
-      return (i1, i2) => i1.status.localeCompare(i2.status);  
+      return (i1, i2) => i1.status.localeCompare(i2.status);
 
     default:
       return (i1, i2) => i1.name.localeCompare(i2.name);
@@ -60,7 +49,7 @@ const getSortFunction = (sortType) => {
  */
 export default function TodoListStorage() {
   const [sort, setSort] = useState(SortType.NONE);
-  const [id, setId] = useState(initialId);
+  //const [id, setId] = useState(initialId);
   const [todoMap, setTodoMap] = useState(initialTodoMap);
   const [todoList, setTodoList] = useState(initialTodoList);
 
@@ -78,14 +67,13 @@ export default function TodoListStorage() {
     return list;
   };
 
-  const saveToLocalStorage = (id, map) => {
+  const saveToLocalStorage = (map) => {
     const json = {};
 
     map.forEach((value, key) => {
       json[key] = value;
     });
 
-    localStorage.setItem(keyId, JSON.stringify(id));
     localStorage.setItem(keyMap, JSON.stringify(json));
   };
 
@@ -99,20 +87,28 @@ export default function TodoListStorage() {
       setTodoList(list.sort(compare));
     }
 
-    saveToLocalStorage(id, todoMap);
-  }, [id, todoMap, sort]);
+    saveToLocalStorage(todoMap);
+  }, [todoMap, sort]);
 
   const saveTodo = (name, status) => {
-    const newTodo = {
-      name,
+    const nameFormatted = name.trim();
+    if (nameFormatted === "") {
+      throw new Error("Tên không được để trống");
+    }
+
+    const id = Utils.toSlug(nameFormatted);
+    if (todoMap.has(id)) {
+      throw new Error("Tên đã tồn tại");
+    }
+
+    const newMap = new Map(todoMap);
+    const todo = {
+      name: nameFormatted,
       status,
     };
 
-    const newMap = new Map(todoMap);
-    newMap.set(id, newTodo);
-
+    newMap.set(id, todo);
     setTodoMap(newMap);
-    setId((currentId) => currentId + 1);
   };
 
   const deleteTodo = (id) => {
