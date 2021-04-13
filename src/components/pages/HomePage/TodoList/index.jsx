@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
-import Todo from "../Todo/";
-import { TodoContext } from "../../../../App";
-import "./index.css";
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import Todo from '../Todo';
+import { TodoContext } from '../../../../App';
+import './index.css';
 
 export default function TodoList(props) {
   const { onUpdateTodo, onCancel } = props;
@@ -32,3 +33,8 @@ export default function TodoList(props) {
     </table>
   );
 }
+
+TodoList.propTypes = {
+  onUpdateTodo: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+};

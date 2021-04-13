@@ -1,32 +1,34 @@
-import React, { useContext, useState } from "react";
-import Button from "../../../common/Button";
-import SortType from "../../../../constants/SortType";
-import { TodoContext } from "../../../../App";
-import "./index.css";
+import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
+import Button from '../../../common/Button';
+import SortType from '../../../../constants/SortType';
+import { TodoContext } from '../../../../App';
+import './index.css';
 
 function ListSort({ onClose }) {
   const { setSort } = useContext(TodoContext);
 
   const listItem = [
     {
-      name: "Tên A-Z",
+      name: 'Tên A-Z',
       type: SortType.INCREASE,
     },
     {
-      name: "Tên Z-A",
+      name: 'Tên Z-A',
       type: SortType.DECREASE,
     },
     {
-      name: "Trạng thái kích hoạt",
+      name: 'Trạng thái kích hoạt',
       type: SortType.STATUS_ACTIVE,
     },
     {
-      name: "Trạng thái ẩn",
+      name: 'Trạng thái ẩn',
       type: SortType.STATUS_INACTIVE,
     },
   ];
 
   const elements = listItem.map((item) => (
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <li
       key={item.type}
       onMouseDown={() => {
@@ -56,8 +58,14 @@ export default function Sort() {
 
   return (
     <span className="sort-container">
-      <Button onClick={onClick} onBlur={onClose}>Sắp xếp</Button>
+      <Button onClick={onClick} onBlur={onClose}>
+        Sắp xếp
+      </Button>
       {element}
     </span>
   );
 }
+
+ListSort.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};

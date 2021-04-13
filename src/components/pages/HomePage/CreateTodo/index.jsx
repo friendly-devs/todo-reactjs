@@ -1,6 +1,7 @@
-import { useContext } from "react";
-import { TodoContext } from "../../../../App";
-import FormTodo from "../FormTodo";
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import { TodoContext } from '../../../../App';
+import FormTodo from '../FormTodo';
 
 export default function CreateTodo(props) {
   const { onCancel } = props;
@@ -16,3 +17,7 @@ export default function CreateTodo(props) {
 
   return <FormTodo onSubmit={onSubmit} onCancel={onCancel} />;
 }
+
+CreateTodo.propTypes = {
+  onCancel: PropTypes.func.isRequired,
+};

@@ -1,10 +1,10 @@
-import slugify from "slugify";
+import slugify from 'slugify';
 
 const config = {
-  replacement: "-",
+  replacement: '-',
   lower: true,
   remove: /[*+~.,()'"!:@]/g,
-  locale: "vi",
+  locale: 'vi',
 };
 
 const Utils = {

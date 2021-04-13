@@ -1,15 +1,15 @@
-import React, { useContext, useState, useCallback } from "react";
-import debounce from "lodash.debounce";
+import React, { useContext, useState, useCallback } from 'react';
+import debounce from 'lodash.debounce';
 
-import CreatTodo from "./CreateTodo";
-import TodoList from "./TodoList";
-import Button from "../../common/Button";
+import CreatTodo from './CreateTodo';
+import TodoList from './TodoList';
+import Button from '../../common/Button';
 
-import "./index.css";
-import UpdateTodo from "./UpdateTodo";
-import { TodoContext } from "../../../App";
-import Search from "../../common/Search";
-import SortText from "./SortText";
+import './index.css';
+import UpdateTodo from './UpdateTodo';
+import { TodoContext } from '../../../App';
+import Search from '../../common/Search';
+import SortText from './SortText';
 
 const timeDelay = 500; // milliseconds
 
@@ -38,7 +38,7 @@ export default function HomePage() {
 
   const debouncedSave = useCallback(
     debounce((value) => findAllTodoByName(value), timeDelay),
-    []
+    [],
   );
 
   const onChangeHandle = (event) => {

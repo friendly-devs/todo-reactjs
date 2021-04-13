@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import Utils from "../utils/StringUtils";
-import SortType from "../constants/SortType";
+import { useEffect, useState } from 'react';
+import Utils from '../utils/StringUtils';
+import SortType from '../constants/SortType';
 
-const keyMap = "todo.map";
+const keyMap = 'todo.map';
 
 function readMapFromLocalStorage() {
   const map = new Map();
@@ -11,9 +11,9 @@ function readMapFromLocalStorage() {
   if (data != null) {
     const obj = JSON.parse(data);
 
-    for (const key in obj) {
+    Object.keys(obj).forEach((key) => {
       map.set(key, obj[key]);
-    }
+    });
   }
 
   return map;
@@ -91,13 +91,13 @@ export default function TodoListStorage() {
 
   const saveTodo = (name, status) => {
     const nameFormatted = name.trim();
-    if (nameFormatted === "") {
-      throw new Error("Tên không được để trống");
+    if (nameFormatted === '') {
+      throw new Error('Tên không được để trống');
     }
 
     const id = Utils.toSlug(nameFormatted);
     if (todoMap.has(id)) {
-      throw new Error("Tên đã tồn tại");
+      throw new Error('Tên đã tồn tại');
     }
 
     const newMap = new Map(todoMap);
@@ -148,12 +148,10 @@ export default function TodoListStorage() {
   const findAllTodoByName = (text) => {
     const list = convertToList(todoMap);
 
-    if (text.trim() === "") {
+    if (text.trim() === '') {
       setTodoList(list);
     } else {
-      const newTodoList = list.filter(({ name }) =>
-        Utils.includesIgnoreCase(name, text)
-      );
+      const newTodoList = list.filter(({ name }) => Utils.includesIgnoreCase(name, text));
       setTodoList(newTodoList);
     }
   };

@@ -1,9 +1,12 @@
-import { useContext } from "react";
-import { TodoContext } from "../../../../App";
-import Button from "../../../common/Button";
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import { TodoContext } from '../../../../App';
+import Button from '../../../common/Button';
 
 export default function Todo(props) {
-  const { index, todo, onUpdateTodo, onCancel } = props;
+  const {
+    index, todo, onUpdateTodo, onCancel,
+  } = props;
   const { id, name, status } = todo;
 
   const { deleteTodo } = useContext(TodoContext);
@@ -29,3 +32,14 @@ export default function Todo(props) {
     </tr>
   );
 }
+
+Todo.propTypes = {
+  index: PropTypes.number.isRequired,
+  todo: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    status: PropTypes.string,
+  }).isRequired,
+  onUpdateTodo: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+};
