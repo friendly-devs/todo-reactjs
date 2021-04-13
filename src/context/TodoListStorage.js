@@ -49,7 +49,6 @@ const getSortFunction = (sortType) => {
  */
 export default function TodoListStorage() {
   const [sort, setSort] = useState(SortType.NONE);
-  //const [id, setId] = useState(initialId);
   const [todoMap, setTodoMap] = useState(initialTodoMap);
   const [todoList, setTodoList] = useState(initialTodoList);
 

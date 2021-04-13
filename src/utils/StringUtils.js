@@ -1,19 +1,20 @@
 import slugify from "slugify";
 
+const config = {
+  replacement: "-",
+  lower: true,
+  remove: /[*+~.,()'"!:@]/g,
+  locale: "vi",
+};
+
 const Utils = {
   includesIgnoreCase(target, value) {
-    const lowCaseTarget = target.toLocaleLowerCase();
-    const lowCaseValue = value.toLocaleLowerCase();
-    return lowCaseTarget.includes(lowCaseValue);
+    const slugTarget = slugify(target, config);
+    const slugValue = slugify(value, config);
+    return slugTarget.includes(slugValue);
   },
   toSlug(str) {
-
-    return slugify(str, {
-      replacement: "-",
-      lower: true,
-      remove: /[*+~.,()'"!:@]/g,
-      locale: "vi",
-    });
+    return slugify(str, config);
   },
 };
 
