@@ -28,9 +28,8 @@ function ListSort({ onClose }) {
 
   const elements = listItem.map((item) => (
     <li
-      onBlur={() => console.log('bug')}
       key={item.type}
-      onClick={() => {
+      onMouseDown={() => {
         onClose();
         setSort(item.type);
       }}
@@ -57,7 +56,7 @@ export default function Sort() {
 
   return (
     <span className="sort-container">
-      <Button onClick={onClick}>Sắp xếp</Button>
+      <Button onClick={onClick} onBlur={onClose}>Sắp xếp</Button>
       {element}
     </span>
   );
