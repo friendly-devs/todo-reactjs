@@ -12,7 +12,12 @@ export default function UpdateTodo(props) {
   const { updateTodo } = useContext(TodoContext);
 
   const onSubmit = (nameValue, statusValue) => {
-    updateTodo(id, nameValue, statusValue);
+    try {
+      updateTodo(id, nameValue, statusValue);
+      window.alert('Cập nhật thành công');
+    } catch (e) {
+      window.alert(e.message);
+    }
   };
 
   return (

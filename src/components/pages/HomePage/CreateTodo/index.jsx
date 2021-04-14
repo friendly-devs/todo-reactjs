@@ -10,8 +10,9 @@ export default function CreateTodo(props) {
   const onSubmit = (name, status) => {
     try {
       saveTodo(name, status);
+      window.alert('Thêm thành công');
     } catch (e) {
-      alert(e.message);
+      window.alert(e.message);
     }
   };
 

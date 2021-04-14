@@ -12,8 +12,11 @@ export default function Todo(props) {
   const { deleteTodo } = useContext(TodoContext);
 
   const deleteTodoHandle = () => {
-    deleteTodo(id);
-    onCancel();
+    const result = window.confirm('Bạn có muốn xóa công việc này?');
+    if (result) {
+      deleteTodo(id);
+      onCancel();
+    }
   };
 
   return (

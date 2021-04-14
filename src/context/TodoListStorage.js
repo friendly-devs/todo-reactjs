@@ -44,7 +44,10 @@ const getSortFunction = (sortType) => {
  * saveTodo,
  * deleteTodo,
  * updateTodo,
- * todoList
+ * findById,
+ * findAllTodoByName,
+ * setSort,
+ * todoList,
  * }
  */
 export default function TodoListStorage() {
@@ -123,15 +126,23 @@ export default function TodoListStorage() {
 
   const updateTodo = (id, name, status) => {
     if (todoMap.has(id)) {
+      const nameFormatted = name.trim();
       const todo = {
-        name,
+        name: nameFormatted,
         status,
       };
 
-      const newMap = new Map(todoMap);
-      newMap.set(id, todo);
+      const newId = Utils.toSlug(nameFormatted);
 
-      setTodoMap(newMap);
+      if (todoMap.has(newId)) {
+        throw new Error('Tên đã tồn tại');
+      } else {
+        const newMap = new Map(todoMap);
+        newMap.delete(id);
+        newMap.set(newId, todo);
+
+        setTodoMap(newMap);
+      }
     } else {
       throw Error(`Cannot update todo ${id}`);
     }
