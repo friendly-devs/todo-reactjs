@@ -5,27 +5,27 @@ import SortType from '../../../../constants/SortType';
 import { TodoContext } from '../../../../App';
 import './index.css';
 
-function ListSort({ onClose }) {
-  const { setSort } = useContext(TodoContext);
+const listItem = [
+  {
+    name: 'Tên A-Z',
+    type: SortType.INCREASE,
+  },
+  {
+    name: 'Tên Z-A',
+    type: SortType.DECREASE,
+  },
+  {
+    name: 'Trạng thái kích hoạt',
+    type: SortType.STATUS_ACTIVE,
+  },
+  {
+    name: 'Trạng thái ẩn',
+    type: SortType.STATUS_INACTIVE,
+  },
+];
 
-  const listItem = [
-    {
-      name: 'Tên A-Z',
-      type: SortType.INCREASE,
-    },
-    {
-      name: 'Tên Z-A',
-      type: SortType.DECREASE,
-    },
-    {
-      name: 'Trạng thái kích hoạt',
-      type: SortType.STATUS_ACTIVE,
-    },
-    {
-      name: 'Trạng thái ẩn',
-      type: SortType.STATUS_INACTIVE,
-    },
-  ];
+function ListSort({ type, setType, onClose }) {
+  const { setSort } = useContext(TodoContext);
 
   const elements = listItem.map((item) => (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
@@ -33,10 +33,11 @@ function ListSort({ onClose }) {
       key={item.type}
       onMouseDown={() => {
         onClose();
+        setType(item.type);
         setSort(item.type);
       }}
     >
-      {item.name}
+      {item.type === type ? `${item.name} *` : `${item.name}`}
     </li>
   ));
 
@@ -45,6 +46,11 @@ function ListSort({ onClose }) {
 
 export default function Sort() {
   const [show, setShow] = useState(false);
+  const [type, setType] = useState(SortType.NONE);
+
+  const onTypeChange = (value) => {
+    setType(value);
+  };
 
   const onClose = () => {
     setShow(false);
@@ -54,7 +60,9 @@ export default function Sort() {
     setShow(!show);
   };
 
-  const element = show ? <ListSort onClose={onClose} /> : null;
+  const element = show ? (
+    <ListSort type={type} onClose={onClose} setType={onTypeChange} />
+  ) : null;
 
   return (
     <span className="sort-container">
@@ -67,5 +75,7 @@ export default function Sort() {
 }
 
 ListSort.propTypes = {
+  type: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
+  setType: PropTypes.func.isRequired,
 };

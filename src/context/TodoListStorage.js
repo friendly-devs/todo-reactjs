@@ -101,7 +101,7 @@ export default function TodoListStorage() {
   useEffect(() => {
     const list = convertToList(todoMap);
     const showList = getListSearchAndSort(list, textSearch, sort);
-    window.console.log('change todo map');
+
     setTodoList(showList);
     saveToLocalStorage(todoMap);
   }, [todoMap]);
@@ -109,7 +109,7 @@ export default function TodoListStorage() {
   useEffect(() => {
     const list = convertToList(todoMap);
     const showList = getListSearchAndSort(list, textSearch, sort);
-    window.console.log('change search or sort');
+
     setTodoList(showList);
   }, [textSearch, sort]);
 
