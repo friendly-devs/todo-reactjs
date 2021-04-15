@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+
 import Todo from '../Todo';
 import { TodoContext } from '../../../../App';
+
 import './index.css';
 
 export default function TodoList(props) {

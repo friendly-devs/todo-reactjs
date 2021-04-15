@@ -4,6 +4,6 @@ import './index.css';
 
 export default function Search(props) {
   return (
-    <TextField type="search" placeholder="Nhập từ khóa" {...props} />
+    <TextField name="search" type="search" placeholder="Nhập từ khóa" {...props} />
   );
 }

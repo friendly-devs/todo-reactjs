@@ -2,14 +2,15 @@ import React, { useContext, useState, useCallback } from 'react';
 import debounce from 'lodash.debounce';
 
 import CreatTodo from './CreateTodo';
+import SortText from './SortText';
 import TodoList from './TodoList';
+import UpdateTodo from './UpdateTodo';
+
 import Button from '../../common/Button';
+import Search from '../../common/Search';
+import { TodoContext } from '../../../App';
 
 import './index.css';
-import UpdateTodo from './UpdateTodo';
-import { TodoContext } from '../../../App';
-import Search from '../../common/Search';
-import SortText from './SortText';
 
 const timeDelay = 500; // milliseconds
 
@@ -65,7 +66,7 @@ export default function HomePage() {
 
         <div className="todo-content">
           <Button onClick={showForm}>Thêm công việc</Button>
-          <div>
+          <div className="todo-content-header">
             <Search onChange={onChangeHandle} />
             <SortText />
           </div>
