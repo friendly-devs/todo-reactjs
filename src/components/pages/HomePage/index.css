@@ -20,3 +20,10 @@ h1 {
 .todo-content-header {
   margin-top: 10px;
 }
+
+@media screen and (max-width: 800px) {
+  .root-container {
+    flex-direction: column-reverse;
+    padding: 0px 10px;
+  }
+}
