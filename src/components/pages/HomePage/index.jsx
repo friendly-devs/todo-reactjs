@@ -10,7 +10,6 @@ import UpdateTodo from './UpdateTodo';
 import { TodoContext } from '../../../App';
 import Search from '../../common/Search';
 import SortText from './SortText';
-import Alert from '../../common/Alert';
 
 const timeDelay = 500; // milliseconds
 
@@ -72,7 +71,6 @@ export default function HomePage() {
           </div>
           <TodoList onUpdateTodo={onUpdateTodo} onCancel={onCancel} />
         </div>
-        <Alert message="Hello tamssjjjs" />
       </div>
     </>
   );

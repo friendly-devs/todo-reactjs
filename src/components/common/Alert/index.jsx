@@ -7,19 +7,16 @@ export default function Alert(props) {
   const [hide, setHide] = useState(false);
 
   useEffect(() => {
-    setHide(false);
-
     const timeoutId = setTimeout(() => {
       setHide(true);
     }, 2000);
 
     return () => {
-      window.console.log('Clear timeout');
       clearTimeout(timeoutId);
     };
-  }, [message]);
+  }, []);
 
-  if (hide) {
+  if (hide || message === '') {
     return null;
   }
 
@@ -31,10 +28,11 @@ export default function Alert(props) {
 }
 
 Alert.propTypes = {
-  message: PropTypes.string.isRequired,
+  message: PropTypes.string,
   variant: PropTypes.string,
 };
 
 Alert.defaultProps = {
+  message: '',
   variant: 'primary',
 };
