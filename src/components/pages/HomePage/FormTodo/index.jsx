@@ -73,7 +73,7 @@ export default function FormTodo(props) {
           onChange={handleChangeStatus}
         />
 
-        <div>
+        <div className="bottom-wrapper">
           <Button onClick={onClick}>Lưu lại</Button>
           <Button variant="error" onClick={onCancel}>
             Hủy bỏ

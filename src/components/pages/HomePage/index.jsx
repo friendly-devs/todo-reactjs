@@ -65,7 +65,7 @@ export default function HomePage() {
 
         <div className="todo-content">
           <Button onClick={showForm}>Thêm công việc</Button>
-          <div>
+          <div className="todo-content-header">
             <Search onChange={onChangeHandle} />
             <SortText />
           </div>

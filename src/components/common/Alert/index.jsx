@@ -21,7 +21,7 @@ export default function Alert(props) {
   }
 
   return (
-    <div className={`alert alert-${variant}`} role="alert">
+    <div className={`alert-component alert-${variant}`} role="alert">
       {message}
     </div>
   );

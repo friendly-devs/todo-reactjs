@@ -20,12 +20,12 @@ export default function Todo(props) {
   };
 
   return (
-    <tr>
+    <tr className="todo-row">
       <td>{index + 1}</td>
       <td>{name}</td>
       <td>{status}</td>
       <td>
-        <Button variant="warning" onClick={() => onUpdateTodo(id)}>
+        <Button style={{ marginRight: '10px' }} variant="warning" onClick={() => onUpdateTodo(id)}>
           Sửa
         </Button>
         <Button variant="error" onClick={deleteTodoHandle}>
