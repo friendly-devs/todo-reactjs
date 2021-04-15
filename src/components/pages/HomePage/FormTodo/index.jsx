@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import Button from '../../../common/Button';
 import TextInput from '../../../common/TextInput';
 import SelectionLabel from '../../../common/SelectionLabel';
-import todoStatus from '../../../../constants/todoStatus';
+import todoStatus from '../../../../constants/TodoStatus';
 
 import './index.css';
 

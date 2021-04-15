@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { TodoContext } from '../../../../App';
+
 import Button from '../../../common/Button';
+import { TodoContext } from '../../../../App';
 
 export default function Todo(props) {
   const {

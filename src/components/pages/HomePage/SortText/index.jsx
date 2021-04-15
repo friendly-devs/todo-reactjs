@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import Button from '../../../common/Button';
 import SortType from '../../../../constants/SortType';
 import { TodoContext } from '../../../../App';
+
 import './index.css';
 
 const listItem = [
