@@ -21,11 +21,12 @@ export default function TextFiled(props) {
 
 TextFiled.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   type: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
 TextFiled.defaultProps = {
   type: 'text',
+  value: undefined, // for uncontrolled
 };
