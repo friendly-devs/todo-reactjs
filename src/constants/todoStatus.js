@@ -1,6 +1,6 @@
 const status = {
   ACTIVE: 'Hiện',
-  INACTIVE: 'Ẩn'
-}
+  INACTIVE: 'Ẩn',
+};
 
-export default status
+export default status;
