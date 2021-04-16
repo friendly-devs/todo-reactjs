@@ -1,16 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import FormTodo from '../FormTodo';
 import Alert from '../../../common/Alert';
-import { TodoContext } from '../../../../App';
+import { addTodo } from '../../../../action/todo';
 
 export default function CreateTodo(props) {
   const { onCancel } = props;
-  const { saveTodo } = useContext(TodoContext);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('success');
   const [count, setCount] = useState(0);
+
+  const dispatch = useDispatch();
 
   const alertMessage = message !== '' ? (
     <Alert key={count} message={message} variant={messageType} />
@@ -24,7 +26,7 @@ export default function CreateTodo(props) {
 
   const onSubmit = (name, status) => {
     try {
-      saveTodo(name, status);
+      dispatch(addTodo(name, status));
       showMessage('Thêm thành công');
     } catch (e) {
       showMessage(e.message, 'error');

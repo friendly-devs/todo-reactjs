@@ -1,17 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import Todo from '../Todo';
-import { TodoContext } from '../../../../App';
-
 import './index.css';
+
+const KEY_TODO = 'KEY_TODO';
 
 export default function TodoList(props) {
   const { onUpdateTodo, onCancel } = props;
+  const list = useSelector((state) => state.todo.list);
 
-  const { todoList } = useContext(TodoContext);
+  useEffect(() => {
+    const data = JSON.stringify(list);
+    window.localStorage.setItem(KEY_TODO, data);
+  }, [list]);
 
-  const elements = todoList.map((todo, index) => (
+  const elements = list.map((todo, index) => (
     <Todo
       key={todo.id}
       todo={todo}

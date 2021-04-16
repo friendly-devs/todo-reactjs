@@ -1,5 +1,6 @@
-import React, { useContext, useState, useCallback } from 'react';
-import debounce from 'lodash.debounce';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+// import debounce from 'lodash.debounce';
 
 import CreatTodo from './CreateTodo';
 import SortText from './SortText';
@@ -8,50 +9,65 @@ import UpdateTodo from './UpdateTodo';
 
 import Button from '../../common/Button';
 import Search from '../../common/Search';
-import { TodoContext } from '../../../App';
-
+import setFormType from '../../../action/homePage';
+import formType from '../../../constants/formType';
 import './index.css';
 
-const timeDelay = 500; // milliseconds
+// const timeDelay = 500; // milliseconds
+
+function getFormByFormType(type, onCancel) {
+  switch (type) {
+    case formType.FORM_CREATE:
+      return <CreatTodo onCancel={onCancel} />;
+
+    case formType.FORM_UPDATE:
+      return <UpdateTodo onCancel={onCancel} />;
+
+    default:
+      return null;
+  }
+}
 
 export default function HomePage() {
-  const [enable, setEnable] = useState(true);
-  const [isUpdate, setUpdate] = useState(false);
-  const [todo, setTodo] = useState({});
+  const dispatch = useDispatch();
 
-  const { findById, findAllTodoByName } = useContext(TodoContext);
+  const form = useSelector((states) => states.homePage.form);
 
-  const onCancel = () => {
-    setEnable(false);
-  };
-
-  const showForm = () => {
-    setUpdate(false);
-    setEnable(true);
-  };
+  // const { findById, findAllTodoByName } = useContext(TodoContext);
 
   const onUpdateTodo = (id) => {
-    const currentTodo = findById(id);
-    setTodo(() => currentTodo);
-    setUpdate(true);
-    setEnable(true);
+    // const currentTodo = findById(id);
+    // setTodo(() => currentTodo);
+    /**
+     * code here
+     */
+    console.log(id);
+    // setUpdate(true);
+    // setEnable(true);
   };
 
-  const debouncedSave = useCallback(
-    debounce((value) => findAllTodoByName(value), timeDelay),
-    [],
-  );
+  // const debouncedSave = useCallback(
+  //   debounce((value) => findAllTodoByName(value), timeDelay),
+  //   [],
+  // );
+
+  const setCloseForm = () => {
+    dispatch(setFormType(formType.NONE));
+  };
+
+  const setOpenFormCreate = () => {
+    dispatch(setFormType(formType.FORM_CREATE));
+  };
 
   const onChangeHandle = (event) => {
-    debouncedSave(event.target.value);
+    // debouncedSave(event.target.value);
+    /**
+     * code here
+     */
+    console.log(event);
   };
 
-  const element = isUpdate ? (
-    <UpdateTodo onCancel={onCancel} todo={todo} />
-  ) : (
-    <CreatTodo onCancel={onCancel} />
-  );
-
+  const element = getFormByFormType(form, setCloseForm);
   const elementWrapper = <div className="todo-form">{element}</div>;
 
   return (
@@ -62,15 +78,15 @@ export default function HomePage() {
       </div>
 
       <div className="root-container">
-        {enable && elementWrapper}
+        {elementWrapper}
 
         <div className="todo-content">
-          <Button onClick={showForm}>Thêm công việc</Button>
+          <Button onClick={setOpenFormCreate}>Thêm công việc</Button>
           <div className="todo-content-header">
             <Search onChange={onChangeHandle} />
             <SortText />
           </div>
-          <TodoList onUpdateTodo={onUpdateTodo} onCancel={onCancel} />
+          <TodoList onUpdateTodo={onUpdateTodo} onCancel={setCloseForm} />
         </div>
       </div>
     </>
