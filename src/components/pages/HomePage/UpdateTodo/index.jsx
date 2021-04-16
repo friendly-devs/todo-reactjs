@@ -10,8 +10,7 @@ const title = 'Cập nhật công việc';
 export default function UpdateTodo({ onCancel }) {
   const dispatch = useDispatch();
 
-  const todo = useSelector((states) => states.todo.todoSelected);
-  const { name, status, id } = todo;
+  const { name, status, id } = useSelector((states) => states.todo.todoSelected);
 
   const onSubmit = (nameValue, statusValue) => {
     dispatch(updateTodo(id, nameValue, statusValue));

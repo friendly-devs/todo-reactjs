@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import debounce from 'lodash.debounce';
 
@@ -9,6 +9,7 @@ import UpdateTodo from './UpdateTodo';
 
 import Button from '../../common/Button';
 import Search from '../../common/Search';
+import Alert from '../../common/Alert';
 import setFormType from '../../../action/homePage';
 import formType from '../../../constants/formType';
 import './index.css';
@@ -29,9 +30,19 @@ function getFormByFormType(type, onCancel) {
 }
 
 export default function HomePage() {
+  const [count, setCount] = useState(0);
   const dispatch = useDispatch();
 
   const form = useSelector((states) => states.homePage.form);
+  const message = useSelector((states) => states.todo.message);
+  const { content, type } = (message != null) ? message : ({
+    content: '',
+    type: '',
+  });
+
+  useEffect(() => {
+    setCount(count + 1);
+  }, [message]);
 
   // const { findById, findAllTodoByName } = useContext(TodoContext);
 
@@ -87,6 +98,7 @@ export default function HomePage() {
             <SortText />
           </div>
           <TodoList onUpdateTodo={onUpdateTodo} onCancel={setCloseForm} />
+          <Alert key={count} message={content} variant={type} />
         </div>
       </div>
     </>
