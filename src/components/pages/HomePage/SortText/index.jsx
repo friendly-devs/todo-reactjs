@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { setSortType } from '../../../../action/todo';
 import Button from '../../../common/Button';
 import SortType from '../../../../constants/SortType';
-import { TodoContext } from '../../../../App';
-
 import './index.css';
 
 const listItem = [
@@ -27,8 +27,6 @@ const listItem = [
 ];
 
 function ListSort({ type, setType, onClose }) {
-  const { setSort } = useContext(TodoContext);
-
   const elements = listItem.map((item) => (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <li
@@ -36,7 +34,6 @@ function ListSort({ type, setType, onClose }) {
       onMouseDown={() => {
         onClose();
         setType(item.type);
-        setSort(item.type);
       }}
     >
       {item.type === type ? `${item.name} *` : `${item.name}`}
@@ -46,12 +43,20 @@ function ListSort({ type, setType, onClose }) {
   return <ul className="sort-head-component">{elements}</ul>;
 }
 
-export default function Sort() {
+ListSort.propTypes = {
+  type: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+  setType: PropTypes.func.isRequired,
+};
+
+export default function SortText() {
   const [show, setShow] = useState(false);
-  const [type, setType] = useState(SortType.NONE);
+
+  const dispatch = useDispatch();
+  const sortType = useSelector((states) => states.todo.sortType);
 
   const onTypeChange = (value) => {
-    setType(value);
+    dispatch(setSortType(value));
   };
 
   const onClose = () => {
@@ -63,7 +68,7 @@ export default function Sort() {
   };
 
   const element = show ? (
-    <ListSort type={type} onClose={onClose} setType={onTypeChange} />
+    <ListSort type={sortType} onClose={onClose} setType={onTypeChange} />
   ) : null;
 
   return (
@@ -75,9 +80,3 @@ export default function Sort() {
     </span>
   );
 }
-
-ListSort.propTypes = {
-  type: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
-  setType: PropTypes.func.isRequired,
-};

@@ -1,28 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 import Todo from '../Todo';
 import './index.css';
 
-const KEY_TODO = 'KEY_TODO';
-
-export default function TodoList(props) {
-  const { onUpdateTodo, onCancel } = props;
-  const list = useSelector((state) => state.todo.list);
-
-  useEffect(() => {
-    const data = JSON.stringify(list);
-    window.localStorage.setItem(KEY_TODO, data);
-  }, [list]);
-
+export default function TodoList({ onCancel }) {
+  const list = useSelector((states) => states.todo.listSorted);
   const elements = list.map((todo, index) => (
     <Todo
       key={todo.id}
       todo={todo}
       index={index}
       onCancel={onCancel}
-      onUpdateTodo={onUpdateTodo}
     />
   ));
 
@@ -42,6 +32,5 @@ export default function TodoList(props) {
 }
 
 TodoList.propTypes = {
-  onUpdateTodo: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
 };

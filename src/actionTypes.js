@@ -4,6 +4,8 @@ const actionTypes = {
     DELETE_TODO: 'DELETE_TODO',
     UPDATE_TODO: 'UPDATE_TODO',
     SELECT_TODO: 'SELECT_TODO',
+    SET_TEXT_SEARCH: 'SET_TEXT_SEARCH',
+    SET_SORT_TYPE: 'SET_SORT_TYPE',
   },
   homePage: {
     SET_FROM_TYPE: 'SET_FROM_TYPE',

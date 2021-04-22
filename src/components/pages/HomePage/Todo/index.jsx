@@ -22,8 +22,8 @@ export default function Todo(props) {
   };
 
   const onSelectTodo = () => {
-    dispatch(setFormType(formType.FORM_UPDATE));
     dispatch(selectTodo(id));
+    dispatch(setFormType(formType.FORM_UPDATE));
   };
 
   return (

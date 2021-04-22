@@ -43,6 +43,21 @@ const selectTodo = (id) => ({
   payload: id,
 });
 
+const setTextSearch = (textSearch) => ({
+  type: actionTypes.todo.SET_TEXT_SEARCH,
+  payload: textSearch,
+});
+
+const setSortType = (sortType) => ({
+  type: actionTypes.todo.SET_SORT_TYPE,
+  payload: sortType,
+});
+
 export {
-  addTodo, updateTodo, deleteTodo, selectTodo,
+  addTodo,
+  updateTodo,
+  deleteTodo,
+  selectTodo,
+  setTextSearch,
+  setSortType,
 };

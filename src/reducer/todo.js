@@ -1,6 +1,33 @@
 import actionTypes from '../actionTypes';
+import SortType from '../constants/SortType';
+import StringUtils from '../utils/StringUtils';
 
 const KEY_TODO = 'KEY_TODO';
+
+function getSortFunction(sortType) {
+  switch (sortType) {
+    case SortType.DECREASE:
+      return (i1, i2) => i2.name.localeCompare(i1.name);
+
+    case SortType.STATUS_ACTIVE:
+      return (i1, i2) => i2.status.localeCompare(i1.status);
+
+    case SortType.STATUS_INACTIVE:
+      return (i1, i2) => i1.status.localeCompare(i2.status);
+
+    default:
+      return (i1, i2) => i1.name.localeCompare(i2.name);
+  }
+}
+
+function filterAndSort(list, textSearch, sortType) {
+  let listSorted = [...list];
+  if (textSearch !== '') {
+    listSorted = listSorted.filter((item) => StringUtils.includesIgnoreCase(item.name, textSearch));
+  }
+  const sortFunc = getSortFunction(sortType);
+  return listSorted.sort(sortFunc);
+}
 
 function readTodoList() {
   const data = window.localStorage.getItem(KEY_TODO);
@@ -11,7 +38,7 @@ function readTodoList() {
 }
 
 function addTodo(states, todo) {
-  const { list } = states;
+  const { list, textSearch, sortType } = states;
 
   // check slug
   for (let i = 0; i < list.length; i += 1) {
@@ -27,14 +54,18 @@ function addTodo(states, todo) {
     }
   }
 
+  const newList = [...list, todo];
+  const listSorted = filterAndSort(newList, textSearch, sortType);
+
   return {
     ...states,
-    list: [...list, todo],
+    listSorted,
+    list: newList,
   };
 }
 
 function updateTodo(states, todo) {
-  const { list } = states;
+  const { list, textSearch, sortType } = states;
 
   // check error
   for (let i = 0; i < list.length; i += 1) {
@@ -59,8 +90,11 @@ function updateTodo(states, todo) {
     }
   }
 
+  const listSorted = filterAndSort(list, textSearch, sortType);
+
   return {
     ...states,
+    listSorted,
     message: {
       content: 'Cập nhật thành công',
       type: 'success',
@@ -98,41 +132,74 @@ function deleteTodo(states, id) {
   };
 }
 
-function selectTodo(list, id) {
+function selectTodo(states, id) {
+  const { list } = states;
+  let todoSelected = null;
+
   for (let i = 0; i < list.length; i += 1) {
     if (list[i].id === id) {
-      return list[i];
+      todoSelected = list[i];
+      break;
     }
   }
-  return null;
+
+  return {
+    ...states,
+    todoSelected,
+  };
+}
+
+function setTextSearch(states, textSearch) {
+  return {
+    ...states,
+    textSearch,
+  };
+}
+
+function setSortType(states, sortType) {
+  return {
+    ...states,
+    sortType,
+  };
 }
 
 const list = readTodoList();
+const listSorted = [...list];
 const todoSelected = null;
 const message = null;
+const sortType = SortType.NONE;
+const textSearch = '';
 
 const initialState = {
   list,
+  listSorted,
   todoSelected,
   message,
+  sortType,
+  textSearch,
 };
 
 export default function todoReducer(states = initialState, action) {
+  const { payload } = action;
+
   switch (action.type) {
     case actionTypes.todo.ADD_TODO:
-      return addTodo(states, action.payload);
+      return addTodo(states, payload);
 
     case actionTypes.todo.UPDATE_TODO:
-      return updateTodo(states, action.payload);
+      return updateTodo(states, payload);
 
     case actionTypes.todo.DELETE_TODO:
-      return deleteTodo(states, action.payload);
+      return deleteTodo(states, payload);
 
     case actionTypes.todo.SELECT_TODO:
-      return {
-        ...states,
-        todoSelected: selectTodo(states.list, action.payload),
-      };
+      return selectTodo(states, payload);
+
+    case actionTypes.todo.SET_TEXT_SEARCH:
+      return setTextSearch(states, payload);
+
+    case actionTypes.todo.SET_SORT_TYPE:
+      return setSortType(states, payload);
 
     default:
       return states;
