@@ -1,4 +1,4 @@
-const SortType = {
+const SortTypes = {
   NONE: 'NONE',
   INCREASE: 'INCREASE',
   DECREASE: 'DECREASE',
@@ -6,4 +6,4 @@ const SortType = {
   STATUS_INACTIVE: 'STATUS_INACTIVE',
 };
 
-export default SortType;
+export default SortTypes;

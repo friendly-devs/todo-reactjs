@@ -3,7 +3,7 @@
   z-index: 10;
   background-color: white;
   margin: 2px 0 0;
-  padding: 5px 0;
+  padding: 10px;
   max-width: 200px;
   border-radius: 0.5em;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -18,4 +18,9 @@
   display: inline-block;
   position: absolute;
   margin-left: 10px;
+}
+
+.li-items {
+  border: none;
+  background: white;
 }
