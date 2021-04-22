@@ -2,41 +2,43 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setSortType } from '../../../../action/todo';
+import { setSortType } from '../todoAction';
 import Button from '../../../common/Button';
-import SortType from '../../../../constants/SortType';
+import SortTypes from '../../../constants/sortTypes';
 import './index.css';
 
 const listItem = [
   {
     name: 'Tên A-Z',
-    type: SortType.INCREASE,
+    type: SortTypes.INCREASE,
   },
   {
     name: 'Tên Z-A',
-    type: SortType.DECREASE,
+    type: SortTypes.DECREASE,
   },
   {
     name: 'Trạng thái kích hoạt',
-    type: SortType.STATUS_ACTIVE,
+    type: SortTypes.STATUS_ACTIVE,
   },
   {
     name: 'Trạng thái ẩn',
-    type: SortType.STATUS_INACTIVE,
+    type: SortTypes.STATUS_INACTIVE,
   },
 ];
 
 function ListSort({ type, setType, onClose }) {
   const elements = listItem.map((item) => (
-    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-    <li
-      key={item.type}
-      onMouseDown={() => {
-        onClose();
-        setType(item.type);
-      }}
-    >
-      {item.type === type ? `${item.name} *` : `${item.name}`}
+    <li key={item.type}>
+      <button
+        className="li-items"
+        type="button"
+        onMouseDown={() => {
+          onClose();
+          setType(item.type);
+        }}
+      >
+        {item.type === type ? `${item.name} *` : `${item.name}`}
+      </button>
     </li>
   ));
 

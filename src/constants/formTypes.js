@@ -1,7 +1,7 @@
-const formType = {
+const formTypes = {
   FORM_UPDATE: 'FORM_UPDATE',
   FORM_CREATE: 'FORM_CREATE',
   NONE: 'NONE',
 };
 
-export default formType;
+export default formTypes;

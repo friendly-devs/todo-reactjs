@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 
 import FormTodo from '../FormTodo';
-import { updateTodo } from '../../../../action/todo';
+import { updateTodo } from '../todoAction';
 
 const title = 'Cập nhật công việc';
 

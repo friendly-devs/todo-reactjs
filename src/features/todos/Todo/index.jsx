@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 import Button from '../../../common/Button';
-import { deleteTodo, selectTodo } from '../../../../action/todo';
-import setFormType from '../../../../action/homePage';
-import formType from '../../../../constants/formType';
+import { deleteTodo, selectTodo } from '../todoAction';
+import setFormType from '../../home/homeAction';
+import formTypes from '../../../constants/formTypes';
 
 export default function Todo(props) {
   const { index, todo, onCancel } = props;
@@ -13,7 +13,7 @@ export default function Todo(props) {
 
   const dispatch = useDispatch();
 
-  const deleteTodoHandle = () => {
+  const handleDeleteTodo = () => {
     const result = window.confirm('Bạn có muốn xóa công việc này?');
     if (result) {
       dispatch(deleteTodo(id));
@@ -23,7 +23,7 @@ export default function Todo(props) {
 
   const onSelectTodo = () => {
     dispatch(selectTodo(id));
-    dispatch(setFormType(formType.FORM_UPDATE));
+    dispatch(setFormType(formTypes.FORM_UPDATE));
   };
 
   return (
@@ -39,7 +39,7 @@ export default function Todo(props) {
         >
           Sửa
         </Button>
-        <Button variant="error" onClick={deleteTodoHandle}>
+        <Button variant="error" onClick={handleDeleteTodo}>
           Xóa
         </Button>
       </td>

@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import todoReducer from './reducer/todo';
-import homePageReducer from './reducer/homePage';
+import todoReducer from '../features/todos/todoReducer';
+import homeReducer from '../features/home/homeReducer';
 
 const rootReducer = combineReducers({
   todo: todoReducer,
-  homePage: homePageReducer,
+  home: homeReducer,
 });
 
 export default rootReducer;

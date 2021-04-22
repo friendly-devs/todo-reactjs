@@ -1,7 +1,7 @@
-import actionTypes from '../actionTypes';
+import actionTypes from '../../constants/actionTypes';
 
 const setFormType = (formType) => ({
-  type: actionTypes.homePage.SET_FROM_TYPE,
+  type: actionTypes.home.SET_FROM_TYPE,
   payload: formType,
 });
 

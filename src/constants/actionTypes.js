@@ -7,7 +7,7 @@ const actionTypes = {
     SET_TEXT_SEARCH: 'SET_TEXT_SEARCH',
     SET_SORT_TYPE: 'SET_SORT_TYPE',
   },
-  homePage: {
+  home: {
     SET_FROM_TYPE: 'SET_FROM_TYPE',
   },
 };
