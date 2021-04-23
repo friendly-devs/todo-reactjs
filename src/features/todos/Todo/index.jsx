@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Button from '../../../common/Button';
-import { deleteTodo, selectTodo } from '../todoAction';
-import setFormType from '../../home/homeAction';
-import formTypes from '../../../constants/formTypes';
+import { deleteTodo } from '../todoAction';
 
 export default function Todo(props) {
-  const { index, todo, onCancel } = props;
+  const { index, todo } = props;
   const { id, name, status } = todo;
 
   const dispatch = useDispatch();
@@ -17,13 +16,7 @@ export default function Todo(props) {
     const result = window.confirm('Bạn có muốn xóa công việc này?');
     if (result) {
       dispatch(deleteTodo(id));
-      onCancel();
     }
-  };
-
-  const onSelectTodo = () => {
-    dispatch(selectTodo(id));
-    dispatch(setFormType(formTypes.FORM_UPDATE));
   };
 
   return (
@@ -32,13 +25,14 @@ export default function Todo(props) {
       <td>{name}</td>
       <td>{status}</td>
       <td>
-        <Button
-          style={{ marginRight: '10px' }}
-          variant="warning"
-          onClick={onSelectTodo}
-        >
-          Sửa
-        </Button>
+        <Link to={`/todos/${id}`}>
+          <Button
+            style={{ marginRight: '10px' }}
+            variant="warning"
+          >
+            Sửa
+          </Button>
+        </Link>
         <Button variant="error" onClick={handleDeleteTodo}>
           Xóa
         </Button>
@@ -54,5 +48,4 @@ Todo.propTypes = {
     name: PropTypes.string,
     status: PropTypes.string,
   }).isRequired,
-  onCancel: PropTypes.func.isRequired,
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 import Todo from '../Todo';
@@ -38,14 +37,13 @@ function useTodoList() {
   return listFilter.sort(sortCompare);
 }
 
-export default function TodoList({ onCancel }) {
+export default function TodoList() {
   const list = useTodoList();
   const elements = list.map((todo, index) => (
     <Todo
       key={todo.id}
       todo={todo}
       index={index}
-      onCancel={onCancel}
     />
   ));
 
@@ -63,7 +61,3 @@ export default function TodoList({ onCancel }) {
     </table>
   );
 }
-
-TodoList.propTypes = {
-  onCancel: PropTypes.func.isRequired,
-};

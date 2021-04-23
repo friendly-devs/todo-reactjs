@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Button from '../../../common/Button';
 import TextInput from '../../../common/TextInput';
@@ -18,7 +19,6 @@ export default function FormTodo(props) {
     defaultStatus = initialStatus,
     defaultTitle = initialTitle,
     onSubmit,
-    onCancel,
   } = props;
 
   const [name, setName] = useState(defaultName);
@@ -76,9 +76,11 @@ export default function FormTodo(props) {
 
         <div className="bottom-wrapper">
           <Button onClick={onClick}>Lưu lại</Button>
-          <Button variant="error" onClick={onCancel}>
-            Hủy bỏ
-          </Button>
+          <Link to="/">
+            <Button variant="error">
+              Hủy bỏ
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
@@ -90,7 +92,6 @@ FormTodo.propTypes = {
   defaultStatus: PropTypes.string,
   defaultTitle: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
 };
 
 FormTodo.defaultProps = {

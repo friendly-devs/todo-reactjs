@@ -1,16 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
 
 import FormTodo from '../FormTodo';
 import { updateTodo } from '../todoAction';
 
 const title = 'Cập nhật công việc';
 
-export default function UpdateTodo({ onCancel }) {
+export default function UpdateTodo() {
   const dispatch = useDispatch();
+  const { todoId } = useParams();
 
-  const { name, status, id } = useSelector((states) => states.todo.todoSelected);
+  const list = useSelector((states) => states.todo.list);
+  const todo = list.find((item) => item.id === todoId);
+
+  const { name, status, id } = todo;
 
   const onSubmit = (nameValue, statusValue) => {
     dispatch(updateTodo(id, nameValue, statusValue));
@@ -21,12 +25,7 @@ export default function UpdateTodo({ onCancel }) {
       defaultName={name}
       defaultStatus={status}
       defaultTitle={title}
-      onCancel={onCancel}
       onSubmit={onSubmit}
     />
   );
 }
-
-UpdateTodo.propTypes = {
-  onCancel: PropTypes.func.isRequired,
-};

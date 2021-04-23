@@ -1,7 +1,0 @@
-const formTypes = {
-  FORM_UPDATE: 'FORM_UPDATE',
-  FORM_CREATE: 'FORM_CREATE',
-  NONE: 'NONE',
-};
-
-export default formTypes;
