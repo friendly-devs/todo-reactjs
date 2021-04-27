@@ -1,17 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import debounce from 'lodash.debounce';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import CreatTodo from '../../todos/CreateTodo';
 import SortText from '../../todos/SortText';
 import TodoList from '../../todos/TodoList';
-import UpdateTodo from '../../todos/UpdateTodo';
 
 import Button from '../../../common/Button';
 import Search from '../../../common/Search';
@@ -50,37 +43,17 @@ export default function HomePage() {
   };
 
   return (
-    <Router>
+    <>
       <div>
         <h1>Quản lý công việc</h1>
         <hr />
       </div>
 
       <div className="root-container">
-        <div className="todo-form">
-          <Switch>
-            <Route path="/todos/create" exact>
-              <CreatTodo />
-            </Route>
-            <Route path="/todos/:todoId" exact>
-              <UpdateTodo />
-            </Route>
-          </Switch>
-        </div>
-
         <div className="todo-content">
-          <Switch>
-            <Route path="/" exact>
-              <Link to="/todos/create">
-                <Button>Thêm công việc</Button>
-              </Link>
-            </Route>
-            <Route path="/todos/create" exact>
-              <Link to="/">
-                <Button>Hủy công việc</Button>
-              </Link>
-            </Route>
-          </Switch>
+          <Link to="/todos/create">
+            <Button>Thêm công việc</Button>
+          </Link>
 
           <div className="todo-content-header">
             <Search onChange={onChangeHandle} />
@@ -90,6 +63,6 @@ export default function HomePage() {
           <Alert key={count} message={content} variant={type} />
         </div>
       </div>
-    </Router>
+    </>
   );
 }
