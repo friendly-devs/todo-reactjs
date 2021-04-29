@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import TextFiled from '../TextFiled';
 
 export default function TextInput(props) {
-  const { label } = props;
+  const {
+    label, name, value, type, onChange,
+  } = props;
 
   return (
     <div>
@@ -11,7 +13,12 @@ export default function TextInput(props) {
         <b>{label}</b>
       </div>
       <div>
-        <TextFiled {...props} />
+        <TextFiled
+          name={name}
+          value={value}
+          type={type}
+          onChange={onChange}
+        />
       </div>
     </div>
   );
@@ -19,4 +26,13 @@ export default function TextInput(props) {
 
 TextInput.propTypes = {
   label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  type: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+};
+
+TextInput.defaultProps = {
+  type: 'text',
+  value: undefined, // for uncontrolled
 };
