@@ -3,13 +3,19 @@ import PropTypes from 'prop-types';
 import Selection from '../Selection';
 
 export default function SelectionLabel(props) {
-  const { label } = props;
+  const {
+    label, value, options, onChange,
+  } = props;
 
   return (
     <div>
       <div><b>{label}</b></div>
       <div>
-        <Selection {...props} />
+        <Selection
+          options={options}
+          onChange={onChange}
+          value={value}
+        />
       </div>
     </div>
   );
@@ -17,4 +23,7 @@ export default function SelectionLabel(props) {
 
 SelectionLabel.propTypes = {
   label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  options: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };

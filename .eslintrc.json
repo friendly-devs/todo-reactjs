@@ -20,10 +20,6 @@
         "react"
     ],
     "rules": {
-      "react/jsx-props-no-spreading": "off",
-      "no-alert": "off",
-      "import/no-cycle": "off",
-      "no-noninteractive-element-interactions": "off",
       "import/no-extraneous-dependencies": "off"
     }
 }

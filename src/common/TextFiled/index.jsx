@@ -4,7 +4,7 @@ import './index.css';
 
 export default function TextFiled(props) {
   const {
-    name, value, type, onChange, ...otherProps
+    name, value, type, onChange,
   } = props;
 
   return (
@@ -14,7 +14,6 @@ export default function TextFiled(props) {
       value={value}
       type={type}
       onChange={onChange}
-      {...otherProps}
     />
   );
 }
