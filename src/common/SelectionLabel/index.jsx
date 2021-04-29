@@ -24,6 +24,6 @@ export default function SelectionLabel(props) {
 SelectionLabel.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  options: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func.isRequired,
 };

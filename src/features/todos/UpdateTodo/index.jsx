@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 
 import FormTodo from '../FormTodo';
 import { updateTodo } from '../todoAction';
@@ -9,7 +9,15 @@ const title = 'Cập nhật công việc';
 
 export default function UpdateTodo() {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const message = useSelector((states) => states.todo.message);
   const { todoId } = useParams();
+
+  const redirectToHome = useCallback(() => {
+    if (message && message.type === 'success') {
+      history.push('/');
+    }
+  }, []);
 
   const list = useSelector((states) => states.todo.list);
   const todo = list.find((item) => item.id === todoId);
@@ -18,6 +26,7 @@ export default function UpdateTodo() {
 
   const onSubmit = (nameValue, statusValue) => {
     dispatch(updateTodo(id, nameValue, statusValue));
+    redirectToHome();
   };
 
   return (

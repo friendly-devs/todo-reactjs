@@ -37,8 +37,8 @@ function addTodo(states, { name, status }) {
   };
 
   // check slug
-  const listDuplicate = list.filter((item) => item.slug === todo.slug);
-  if (listDuplicate.length > 0) {
+  const itemDuplicate = list.find((item) => item.slug === todo.slug);
+  if (itemDuplicate != null) {
     return {
       ...states,
       message: {
@@ -51,6 +51,10 @@ function addTodo(states, { name, status }) {
   return {
     ...states,
     list: [...list, todo],
+    message: {
+      content: 'Thêm mới thành công',
+      type: 'success',
+    },
   };
 }
 
