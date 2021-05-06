@@ -194,6 +194,12 @@ export default function todoReducer(states = initialState, action) {
     case actionTypes.todo.SET_SORT_TYPE:
       return setSortType(states, payload);
 
+    case 'todo/fetch_todo_list_success':
+      return {
+        ...states,
+        list: payload,
+      };
+
     default:
       return states;
   }

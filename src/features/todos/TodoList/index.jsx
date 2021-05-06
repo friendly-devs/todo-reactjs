@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Todo from '../Todo';
 import './index.css';
@@ -38,6 +38,12 @@ function useTodoList() {
 }
 
 export default function TodoList() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: 'fetch_todo_list' });
+  }, []);
+
   const list = useTodoList();
   const elements = list.map((todo, index) => (
     <Todo
