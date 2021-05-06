@@ -16,6 +16,10 @@ const Utils = {
   toSlug(str) {
     return slugify(str, config);
   },
+  convertDate(dateStr) {
+    const date = new Date(dateStr);
+    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+  },
 };
 
 export default Utils;

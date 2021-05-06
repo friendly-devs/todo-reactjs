@@ -3,7 +3,6 @@ import api from '../../api/todoApi';
 
 function* fetchTodoList() {
   try {
-    window.console.log('Call api');
     const todoList = yield api.getTodoList();
     yield put({ type: 'todo/fetch_todo_list_success', payload: todoList });
   } catch (error) {
@@ -11,4 +10,13 @@ function* fetchTodoList() {
   }
 }
 
-export default fetchTodoList;
+function* deleteTodo({ payload }) {
+  try {
+    yield api.deleteTodo(payload);
+    yield put({ type: 'todo/fetch_todo_list' });
+  } catch (error) {
+    window.console.log(error);
+  }
+}
+
+export { fetchTodoList, deleteTodo };

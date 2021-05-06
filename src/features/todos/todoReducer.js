@@ -3,15 +3,15 @@ import SortTypes from '../../constants/sortTypes';
 import StringUtils from '../../utils/StringUtils';
 import UUID from '../../utils/UUID';
 
-const KEY_TODO = 'KEY_TODO';
+// const KEY_TODO = 'KEY_TODO';
 
-function readTodoList() {
-  const data = window.localStorage.getItem(KEY_TODO);
-  if (data) {
-    return JSON.parse(data);
-  }
-  return [];
-}
+// function readTodoList() {
+//   const data = window.localStorage.getItem(KEY_TODO);
+//   if (data) {
+//     return JSON.parse(data);
+//   }
+//   return [];
+// }
 
 function addTodo(states, { name, status }) {
   const { list } = states;
@@ -158,7 +158,7 @@ function setSortType(states, sortType) {
   };
 }
 
-const list = readTodoList();
+const list = [];
 const todoSelected = null;
 const message = null;
 const sortType = SortTypes.INCREASE;
