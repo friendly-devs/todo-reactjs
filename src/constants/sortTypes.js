@@ -1,9 +1,0 @@
-const SortTypes = {
-  NONE: 'NONE',
-  INCREASE: 'INCREASE',
-  DECREASE: 'DECREASE',
-  STATUS_ACTIVE: 'STATUS_ACTIVE',
-  STATUS_INACTIVE: 'STATUS_INACTIVE',
-};
-
-export default SortTypes;
