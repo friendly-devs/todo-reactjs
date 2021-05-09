@@ -2,6 +2,6 @@ import React from 'react';
 
 export default function App() {
   return (
-    <div>Hello world</div>
+    <div className="text-blue-500">Hello world</div>
   );
 }
